@@ -1,0 +1,118 @@
+<!--
+File: hw3.html
+GUI 1 Assignment: Creating an Interactive Dynamic Table
+Khiel Jansen Mantilla, UMass Lowell Computer Science
+June 1, 2024 on 10:20 PM
+
+This web page acts like a single web page app that accepts four values and creates a multiplication table of which the head row and columns are the numbers from the start number to the end number. For example, if 0 and 9 are entered for the start and end numbers respectively, then the head row would have 10 cells starting from 0 to 9.
+
+Sources used: I use w3school for the javascript make a table and for appending it to a html element. I also look up how to use nth-child for element on w3school.
+
+username for uml cs server: kmantill
+username for github: khieljansen00
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW3</title>
+    <style>
+        th, td {
+            border: 0.2pc solid black;
+            padding: 3px;
+            padding-left: 1.4pc;
+            text-align: right;
+        }
+        #table-container {
+            overflow: auto;
+            height: 30.0pc;
+        }
+        table tr:nth-child(1) {
+            background-color: #000;
+            color: #fff;
+        }
+        table tr th:nth-child(1) {
+            background-color: #000;
+            color: #fff;
+        }
+        table tr:nth-child(1) th:nth-child(1) {
+            background-color: #fff;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <p>Multiplication Table</p>
+    <form id="multiplication-form">
+        <label for="multiplier0">Enter start multiplier: </label>
+        <input type="number" id="multiplier0" required>
+        <label for="multiplier1">Enter end multiplier: </label>
+        <input type="number" id="multiplier1" required>
+        <label for="multiplicand0">Enter start multiplicand: </label>
+        <input type="number" id="multiplicand0" required>
+        <label for="multiplicand1">Enter end multiplicand: </label>
+        <input type="number" id="multiplicand1" required>
+        <input type="submit" value="Submit">
+    </form>
+    <p id="error"></p>
+    <div id="tablecontainer"></div>
+
+    <script>
+    document.getElementById('multiplication-form').addEventListener('submit', function(event)
+    {
+        event.preventDefault();
+        // retrieve the four numbers
+        let x0 = document.getElementById('multiplier0').value;
+        let x1 = document.getElementById('multiplier1').value;
+        let y0 = document.getElementById('multiplicand0').value;
+        let y1 = document.getElementById('multiplicand1').value;
+
+        if (!(x0 % 1 == 0 || x1 % 1 == 0 || y0 % 1 == 0 || y1 % 1 == 0)) {
+            // check if the numbers are whole numbers
+            console.error("The numbers you enter must be whole numbers.");
+        } else {
+            let multiplicationtable = createtable(x0, x1, y0, y1);
+            //document.body.appendChild(multiplicationTable);
+
+            let div = document.getElementById('tablecontainer');
+            div.appendChild(multiplicationtable);
+        }
+    });
+
+    function createtable(x0, x1, y0, y1) {
+        if (x0 > x1 || y0 > y1) {
+            console.error("The end number has to be greater than the start number.");
+            return;
+        }
+        let table = document.createElement("table");
+
+        var row0 = document.createElement("tr");
+        row0.appendChild(document.createElement("th"));
+        for (let x = x0; x <= x1; x++) {
+            var c0 = document.createElement("th");
+            c0.textContent = x;
+            row0.appendChild(c0);
+            //console.log(x);
+        }
+        table.appendChild(row0);
+
+        for (let y = y0; y <= y1; y++) {
+            var row1 = document.createElement("tr");
+            var h0 = document.createElement("th");
+            h0.textContent = y;
+            row1.appendChild(h0);
+            for (let x = x0; x <= x1; x++) {
+                var c0 = document.createElement("td");
+                let number = x*y;
+                c0.textContent = number;
+                row1.appendChild(c0);
+            }
+            table.appendChild(row1);
+        }
+
+        return table;
+    }
+    </script>
+</body>
+</html>
