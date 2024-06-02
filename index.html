@@ -43,7 +43,7 @@ username for github: khieljansen00
     </style>
 </head>
 <body>
-    <p>Multiplication Table</p>
+    <p>Interactive Table</p>
     <form id="multiplication-form">
         <label for="multiplier0">Enter start multiplier: </label>
         <input type="number" id="multiplier0" required>
@@ -72,11 +72,11 @@ username for github: khieljansen00
             // check if the numbers are whole numbers
             console.error("The numbers you enter must be whole numbers.");
         } else {
-            let multiplicationtable = createtable(x0, x1, y0, y1);
+            let interactivetable = createtable(x0, x1, y0, y1);
             //document.body.appendChild(multiplicationTable);
 
             let div = document.getElementById('tablecontainer');
-            div.appendChild(multiplicationtable);
+            div.appendChild(interactivetable);
         }
     });
 
