@@ -40,19 +40,22 @@ username for github: khieljansen00
             background-color: #fff;
             border: none;
         }
+        input {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <p>Interactive Table</p>
     <form id="multiplication-form">
         <label for="multiplier0">Enter start multiplier: </label>
-        <input type="number" id="multiplier0" required>
+        <input type="number" id="multiplier0">
         <label for="multiplier1">Enter end multiplier: </label>
-        <input type="number" id="multiplier1" required>
+        <input type="number" id="multiplier1">
         <label for="multiplicand0">Enter start multiplicand: </label>
-        <input type="number" id="multiplicand0" required>
+        <input type="number" id="multiplicand0">
         <label for="multiplicand1">Enter end multiplicand: </label>
-        <input type="number" id="multiplicand1" required>
+        <input type="number" id="multiplicand1">
         <input type="submit" value="Submit">
     </form>
     <p id="error"></p>
@@ -68,9 +71,20 @@ username for github: khieljansen00
         let y0 = document.getElementById('multiplicand0').value;
         let y1 = document.getElementById('multiplicand1').value;
 
-        if (!(x0 % 1 == 0 || x1 % 1 == 0 || y0 % 1 == 0 || y1 % 1 == 0)) {
+        let p0 = document.getElementById("error");
+        p0.textContent = "";
+
+        if (Number.isInteger(x0) || Number.isInteger(x1) || Number.isInteger(y0) || Number.isInteger(y1)) {
             // check if the numbers are whole numbers
-            console.error("The numbers you enter must be whole numbers.");
+            //console.error("The numbers you enter must be whole numbers");
+            
+            p0.textContent = "Input error: The numbers you enter must be whole numbers";
+        } else if (x0 === "" || x1 === "" || y0 === "" || y1 === "") {
+            p0.textContent = "Input error: The input cannot be empty";
+        } else if (x0 > x1 || y0 > y1) {
+            p0.textContent = "Input error: The start number has to be less than the end number";
+        } else if (x0 <= -100 || x1 >= 100 || y0 <= -100 || y1 >= 100) {
+            p0.textContent = "Input error: The values are too big. The range has to be from -99 to 99";
         } else {
             let interactivetable = createtable(x0, x1, y0, y1);
             //document.body.appendChild(multiplicationTable);
@@ -81,10 +95,6 @@ username for github: khieljansen00
     });
 
     function createtable(x0, x1, y0, y1) {
-        if (x0 > x1 || y0 > y1) {
-            console.error("The end number has to be greater than the start number.");
-            return;
-        }
         let table = document.createElement("table");
 
         var row0 = document.createElement("tr");
